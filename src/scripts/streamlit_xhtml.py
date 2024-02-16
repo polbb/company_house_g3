@@ -124,10 +124,9 @@ def streamlit_xhtml(company_number):
     with st.spinner('Coverting to GICS...'):
         gics = get_gics_code(company_number)
 
-    st.text(f"SIC code is {sic}")
-    st.text(f"GICS codes are:")
-    for key, value in gics.items():
-        st.text(f"{key}: {value}")
+    st.text(f"SIC code is {sic}, comparative GICS is: {gics}")
+    # for key, value in gics.items():
+    #     st.text(f"{key}: {value}")
 
     ########################################
     # GET SME COMPARISON SET

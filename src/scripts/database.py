@@ -50,11 +50,11 @@ def get_gics_code(company_number):
                 'companyID': company_number
             }
         )
-        file_content = response['Item']['xhtml']  # Assuming the file content is stored under the 'content' key
+        file_content = response['Item']['xhtml']  # Assuming the file content is stored under the 'xhtml' key
         print("File content retrieved successfully.")
     except Exception as e:
         print(f"Error retrieving file content: {e}")
-
+        return None
 
     # Parse the HTML content
     soup = BeautifulSoup(file_content, 'html.parser')
@@ -62,20 +62,21 @@ def get_gics_code(company_number):
     # Extract all text from the HTML
     all_text = soup.get_text()
 
-
     files = {
-        'file': (f'{company_number}.txt', all_text, 'text/plain')  # Assuming 'file' can be passed directly. Adjust 'filename' as needed.
+        'file': (f'{company_number}.txt', all_text, 'text/plain')
     }
     headers = {
         'accept': 'application/json',
-        # The 'Content-Type' is not needed here as it will be set automatically
-        # by requests when using files parameter.
     }
     response = requests.post(url, files=files, headers=headers)
 
-    print(response.status_code)
-    print(response.json())
-    return response.json()
+    if response.status_code == 200:
+        response_json = response.json()
+        # Return 'sub_industry' if it exists, otherwise return the whole json response
+        return response_json.get('sub_industry', response_json)
+    else:
+        print(f"Error: Received status code {response.status_code}")
+        return None
 
 # def get_gics_code(company_number):
 #     url = "https://3il04h84ea.execute-api.eu-west-2.amazonaws.com/classify-upload/"
