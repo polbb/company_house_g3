@@ -1,11 +1,14 @@
 from decimal import Decimal
 import boto3
+from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 import os
 import numpy as np
 import streamlit as st
 from boto3.dynamodb.conditions import Attr
+from helper_functions import load_document_from_openai
 from utils import RATIOS
+import requests
 
 
 aws_access_key_id = st.secrets.AWS_ACCESS_KEY_ID
@@ -34,7 +37,90 @@ def get_sic_code(company_number):
     except Exception as e:
         print(f"Error: {e}")
         return None
+
+def get_gics_code(company_number):
+    url = "https://3il04h84ea.execute-api.eu-west-2.amazonaws.com/classify-upload/"
+
+    table = dynamodb.Table('company_xhtml')
+
+    try:
+        # Get the file from DynamoDB using the file ID
+        response = table.get_item(
+            Key={
+                'companyID': company_number
+            }
+        )
+        file_content = response['Item']['xhtml']  # Assuming the file content is stored under the 'content' key
+        print("File content retrieved successfully.")
+    except Exception as e:
+        print(f"Error retrieving file content: {e}")
+
+
+    # Parse the HTML content
+    soup = BeautifulSoup(file_content, 'html.parser')
+
+    # Extract all text from the HTML
+    all_text = soup.get_text()
+
+
+    files = {
+        'file': (f'{company_number}.txt', all_text, 'text/plain')  # Assuming 'file' can be passed directly. Adjust 'filename' as needed.
+    }
+    headers = {
+        'accept': 'application/json',
+        # The 'Content-Type' is not needed here as it will be set automatically
+        # by requests when using files parameter.
+    }
+    response = requests.post(url, files=files, headers=headers)
+
+    print(response.status_code)
+    print(response.json())
+    return response.json()
+
+# def get_gics_code(company_number):
+#     url = "https://3il04h84ea.execute-api.eu-west-2.amazonaws.com/classify-upload/"
+
+#     table = dynamodb.Table('company_xhtml')
+#     file_content = None
+
+#     try:
+#         # Get the file from DynamoDB using the file ID
+#         response = table.get_item(
+#             Key={
+#                 'companyID': company_number
+#             }
+#         )
+#         file_content = response['Item']['xhtml']  # Assuming the file content is stored under the 'xhtml' key
+#     except Exception as e:
+#         print(f"Error retrieving file content: {e}")
+
+#     if file_content:
+#         # Parse the HTML content
+#         soup = BeautifulSoup(file_content, 'html.parser')
+
+#         # Extract all text from the HTML
+#         all_text = soup.get_text()
+
+#         files = {
+#             'file': (f'{company_number}.txt', all_text, 'text/plain')  # Assuming 'file' can be passed directly. Adjust 'filename' as needed.
+#         }
+#         headers = {
+#             'accept': 'application/json',
+#         }
+#         try:
+#             response = requests.post(url, files=files, headers=headers)
+#             if response.status_code == 200:
+#                 return response.json()['sub_industry']  # Safely return 'Unknown' if 'sub_industry' key is missing
+#             else:
+#                 print(f"Error: Received status code {response.status_code}")
+#                 return 'Unknown'
+#         except Exception as e:
+#             print(f"Error sending request or parsing response: {e}")
+#             return 'Unknown'
+#     else:
+#         return 'Unknown'
     
+       
 def put_item_to_dynamodb(table, item):
     table = dynamodb.Table(table)
     response = table.put_item(

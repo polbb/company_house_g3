@@ -120,7 +120,14 @@ def streamlit_xhtml(company_number):
     # GET SIC
     ########################################
     sic = get_sic_code(company_number)
-    st.text(f"SIC code is {sic}, comparative GICS is [TBD]", )
+
+    with st.spinner('Coverting to GICS...'):
+        gics = get_gics_code(company_number)
+
+    st.text(f"SIC code is {sic}")
+    st.text(f"GICS codes are:")
+    for key, value in gics.items():
+        st.text(f"{key}: {value}")
 
     ########################################
     # GET SME COMPARISON SET
@@ -311,19 +318,19 @@ def streamlit_xhtml(company_number):
 
     with st.sidebar:
         st.title('Sentiment')
-        text = sentiment_analysis()
-        st.write(text)
+        # text = sentiment_analysis()
+        # st.write(text)
 
         st.divider()
 
         st.title('Comparative Analysis')
-        analyse_itr(
-            companyID=company_number,
-            itr=itr_ratio,
-            n=n,
-            stats=statistics['itr_ratio']
-        )
+        # analyse_itr(
+        #     companyID=company_number,
+        #     itr=itr_ratio,
+        #     n=n,
+        #     stats=statistics['itr_ratio']
+        # )
 
 
-    st.text('Code Frozen 09:50 2024.02.16')
+    # st.text('Code Frozen 09:50 2024.02.16')
     
