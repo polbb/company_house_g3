@@ -124,9 +124,8 @@ def streamlit_xhtml(company_number):
     with st.spinner('Coverting to GICS...'):
         gics = get_gics_code(company_number)
 
-    st.text(f"SIC code is {sic}, comparative GICS is: {gics}")
-    # for key, value in gics.items():
-    #     st.text(f"{key}: {value}")
+    placeholder = st.empty()
+    placeholder.text(f"SIC code is {sic}, comparative GICS is: TBC")
 
     ########################################
     # GET SME COMPARISON SET
@@ -152,7 +151,6 @@ def streamlit_xhtml(company_number):
 
         if result is not None:
             n = len(result)
-            # st.write(f'number n: {n}')
 
             dataframe = make_dataframe(result)
             dataframe = calculate_financial_ratios(dataframe) #add ratios columns
@@ -313,7 +311,10 @@ def streamlit_xhtml(company_number):
         # st.text('Code Frozen 10:33 2024.02.13')
 
 
+    with st.spinner('Coverting to GICS...'):
+        gics = get_gics_code(company_number)
 
+    placeholder.text(f"SIC code is {sic}, comparative GICS is: {gics}")
 
     with st.sidebar:
         st.title('Sentiment')
