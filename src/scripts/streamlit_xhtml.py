@@ -317,18 +317,18 @@ def streamlit_xhtml(company_number):
 
     with st.sidebar:
         st.title('Sentiment')
-        # text = sentiment_analysis()
-        # st.write(text)
+        text = sentiment_analysis()
+        st.write(text)
 
         st.divider()
 
         st.title('Comparative Analysis')
-        # analyse_itr(
-        #     companyID=company_number,
-        #     itr=itr_ratio,
-        #     n=n,
-        #     stats=statistics['itr_ratio']
-        # )
+        analyse_itr(
+            companyID=company_number,
+            itr=itr_ratio,
+            n=n,
+            stats=statistics['itr_ratio']
+        )
 
 
     # st.text('Code Frozen 09:50 2024.02.16')
