@@ -124,9 +124,7 @@ def streamlit_xhtml(company_number):
 
     placeholder = st.empty()
     with placeholder.container():
-        with st.spinner("Fetching SIC code..."):
-            placeholder.text(f"SIC code is {sic}, comparative GICS is: TBC")
-            
+        placeholder.text(f"SIC code is {sic}, comparative GICS is: TBC")
 
     ########################################
     # GET SME COMPARISON SET
@@ -311,11 +309,11 @@ def streamlit_xhtml(company_number):
 
         # st.text('Code Frozen 10:33 2024.02.13')
 
+    with placeholder.container():
+        with st.spinner('Coverting to GICS...'):
+            gics = get_gics_code(company_number)
 
-    with st.spinner('Coverting to GICS...'):
-        gics = get_gics_code(company_number)
-
-    placeholder.text(f"SIC code is {sic}, comparative GICS is: {gics}")
+        placeholder.text(f"SIC code is {sic}, comparative GICS is: {gics}")
 
     with st.sidebar:
         st.title('Sentiment')
