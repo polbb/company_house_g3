@@ -62,6 +62,13 @@ def get_gics_code(company_number):
     # Extract all text from the HTML
     all_text = soup.get_text()
 
+    # Get SIC code and append to the text file:
+    sic_code = get_gics_code(company_number)
+
+    # Extract all text from the HTML and prepend the SIC code
+    all_text = f"SIC Code: {sic_code}\n" + all_text
+    print(all_text)
+
     files = {
         'file': (f'{company_number}.txt', all_text, 'text/plain')
     }
@@ -78,49 +85,8 @@ def get_gics_code(company_number):
         print(f"Error: Received status code {response.status_code}")
         return None
 
-# def get_gics_code(company_number):
-#     url = "https://3il04h84ea.execute-api.eu-west-2.amazonaws.com/classify-upload/"
 
-#     table = dynamodb.Table('company_xhtml')
-#     file_content = None
 
-#     try:
-#         # Get the file from DynamoDB using the file ID
-#         response = table.get_item(
-#             Key={
-#                 'companyID': company_number
-#             }
-#         )
-#         file_content = response['Item']['xhtml']  # Assuming the file content is stored under the 'xhtml' key
-#     except Exception as e:
-#         print(f"Error retrieving file content: {e}")
-
-#     if file_content:
-#         # Parse the HTML content
-#         soup = BeautifulSoup(file_content, 'html.parser')
-
-#         # Extract all text from the HTML
-#         all_text = soup.get_text()
-
-#         files = {
-#             'file': (f'{company_number}.txt', all_text, 'text/plain')  # Assuming 'file' can be passed directly. Adjust 'filename' as needed.
-#         }
-#         headers = {
-#             'accept': 'application/json',
-#         }
-#         try:
-#             response = requests.post(url, files=files, headers=headers)
-#             if response.status_code == 200:
-#                 return response.json()['sub_industry']  # Safely return 'Unknown' if 'sub_industry' key is missing
-#             else:
-#                 print(f"Error: Received status code {response.status_code}")
-#                 return 'Unknown'
-#         except Exception as e:
-#             print(f"Error sending request or parsing response: {e}")
-#             return 'Unknown'
-#     else:
-#         return 'Unknown'
-    
        
 def put_item_to_dynamodb(table, item):
     table = dynamodb.Table(table)
