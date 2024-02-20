@@ -9,6 +9,7 @@ from boto3.dynamodb.conditions import Attr
 from helper_functions import load_document_from_openai
 from utils import RATIOS
 import requests
+from document_retrieval import get_company_profile
 
 
 aws_access_key_id = st.secrets.AWS_ACCESS_KEY_ID
@@ -63,11 +64,14 @@ def get_gics_code(company_number):
     all_text = soup.get_text()
     # st.write(f'before sic: {all_text}')
 
-    # Get SIC code and append to the text file:
-    sic_code = get_sic_code(company_number)
+    # # Get SIC code and append to the text file:
+    # sic_code = get_sic_code(company_number)
+
+    # Get company profile info
+    profile_json = get_company_profile(company_number)
 
     # Extract all text from the HTML and prepend the SIC code
-    all_text = f"SIC Code: {sic_code}\n {all_text}" 
+    all_text = f"SIC Code: {profile_json}\n {all_text}" 
     st.write(f'after sic: {all_text}')
 
     files = {
