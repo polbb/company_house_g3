@@ -9,7 +9,7 @@ from boto3.dynamodb.conditions import Attr
 from helper_functions import load_document_from_openai
 from utils import RATIOS
 import requests
-from document_retrieval import *
+from document_retrieval import get_company_profile
 
 
 aws_access_key_id = st.secrets.AWS_ACCESS_KEY_ID
