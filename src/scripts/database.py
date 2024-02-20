@@ -9,7 +9,7 @@ from boto3.dynamodb.conditions import Attr
 from helper_functions import load_document_from_openai
 from utils import RATIOS
 import requests
-from document_retrieval import get_company_profile
+
 
 
 aws_access_key_id = st.secrets.AWS_ACCESS_KEY_ID
@@ -20,6 +20,31 @@ aws_default_region = st.secrets.AWS_DEFAULT_REGION
 # aws_access_key_id = os.getenv('AWS_ACCESS_KEY_ID')
 # aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY')
 # aws_default_region = os.getenv('AWS_DEFAULT_REGION')
+
+def get_company_profile(company_number):
+    """
+    Retrieves the company information from the provided company number.
+
+    Parameters
+    ----------
+    company_number : str
+        The company number to retrieve the company information.
+
+    Returns
+    -------
+    dict
+        A dictionary containing the company information.
+        Returns None if an exception occurs.
+    """
+    try:
+        url = f"https://api.company-information.service.gov.uk/company/{company_number}"
+        response = make_get_request(url, headers=None)
+        company_info = response.json()
+        return company_info
+
+    except Exception as e:
+        print(f"Error occurred while retrieving company information: {e}")
+        return None
 
 def get_sic_code(company_number):
     try:
