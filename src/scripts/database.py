@@ -10,8 +10,6 @@ from helper_functions import load_document_from_openai, make_get_request
 from utils import RATIOS
 import requests
 
-
-
 aws_access_key_id = st.secrets.AWS_ACCESS_KEY_ID
 aws_secret_access_key = st.secrets.AWS_SECRET_ACCESS_KEY
 aws_default_region = st.secrets.AWS_DEFAULT_REGION
