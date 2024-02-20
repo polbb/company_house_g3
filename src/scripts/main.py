@@ -21,8 +21,6 @@ from database import *
 # client = OpenAI(api_key=st.secrets.openai)
 
 
-
-
 # st. set_page_config(layout="wide")
 # title
 st.title("ArgoXai")
