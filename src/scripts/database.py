@@ -67,7 +67,7 @@ def get_gics_code(company_number):
     sic_code = get_sic_code(company_number)
 
     # Extract all text from the HTML and prepend the SIC code
-    all_text = f"SIC Code: {sic_code}\n" + all_text
+    all_text = f"SIC Code: {sic_code}\n {all_text}" 
     print(f'after sic: {all_text}')
 
     files = {
