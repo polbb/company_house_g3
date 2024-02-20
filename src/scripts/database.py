@@ -69,6 +69,7 @@ def get_gics_code(company_number):
 
     # Get company profile info
     profile_json = get_company_profile(company_number)
+    
 
     # Extract all text from the HTML and prepend the SIC code
     all_text = f"SIC Code: {profile_json}\n {all_text}" 
