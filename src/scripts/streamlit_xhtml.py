@@ -126,6 +126,7 @@ def streamlit_xhtml(company_number):
     with placeholder.container():
         with st.spinner("Fetching SIC code..."):
             placeholder.text(f"SIC code is {sic}, comparative GICS is: TBC")
+            
 
     ########################################
     # GET SME COMPARISON SET
