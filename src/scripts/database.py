@@ -63,7 +63,7 @@ def get_gics_code(company_number):
     all_text = soup.get_text()
 
     # Get SIC code and append to the text file:
-    sic_code = get_gics_code(company_number)
+    sic_code = get_sic_code(company_number)
 
     # Extract all text from the HTML and prepend the SIC code
     all_text = f"SIC Code: {sic_code}\n" + all_text
