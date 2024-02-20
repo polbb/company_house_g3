@@ -6,7 +6,7 @@ import os
 import numpy as np
 import streamlit as st
 from boto3.dynamodb.conditions import Attr
-from helper_functions import load_document_from_openai
+from helper_functions import load_document_from_openai, make_get_request
 from utils import RATIOS
 import requests
 
