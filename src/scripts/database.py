@@ -310,6 +310,18 @@ def calculate_financial_ratios(df):
     return df
 
 def calculate_statistics(df):
+    """
+    Calculate basic statistics for each numeric column in a DataFrame, excluding 'companyID'.
+    
+    This function computes the minimum, maximum, and median values for each column after filtering out outliers
+    based on the interquartile range (IQR). Outliers are defined as values below Q1 - 1.5*IQR or above Q3 + 1.5*IQR.
+    
+    Parameters:
+    - df (pd.DataFrame): The DataFrame containing the data to analyze.
+    
+    Returns:
+    - dict: A dictionary where each key is a column name and each value is another dictionary with 'min', 'max', and 'median' statistics.
+    """
     # Generate statistics for each column in the DataFrame
     ratios = RATIOS
     statistics = {}
@@ -336,17 +348,7 @@ def calculate_statistics(df):
             }
     return statistics
 
-# def calculate_statistics(df):
-#     ratios = RATIOS
-#     statistics = {}
-#     for column in df.columns:
-#         if column != 'companyID':
-#             statistics[column] = {
-#                 'min': round(float(df[column].min()), 2),
-#                 'max': round(float(df[column].max()), 2),
-#                 'median': round(float(df[column].median()), 2)
-#             }
-#     return statistics
+
 
 def check_company_profile_exists(company_id):
     table_name = 'company_profile'
