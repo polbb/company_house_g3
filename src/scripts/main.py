@@ -21,6 +21,7 @@ from database import *
 # client = OpenAI(api_key=st.secrets.openai)
 with open( "src/scripts/style.css" ) as css:
     st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)
+    
 
 # st. set_page_config(layout="wide")
 # title
