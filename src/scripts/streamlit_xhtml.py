@@ -313,7 +313,7 @@ def streamlit_xhtml(company_number):
         # with st.spinner('Coverting to GICS...'):
         #     gics = get_gics_code(company_number)
 
-        placeholder.text(f"SIC code is {sic}, comparative GICS is: {gics}")
+        # placeholder.text(f"SIC code is {sic}, comparative GICS is: {gics}")
 
     with st.sidebar:
         # st.title('Sentiment')
