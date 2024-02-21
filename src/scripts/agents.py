@@ -334,10 +334,17 @@ def analyse_metrics(companyID, metrics, n, stats):
     instructions = (
     f'You are an expert as both, underwriter and financial analyst. '
     f'You will analyse the data provided of financial ratios for a small company in the UK. '
-    f'You will compare Inventory Turn Ratio againt the min, max and median of ITR for a set of similar companies. '
+    f'You will compare all ratios againt the min, max and median of ratios for a set of similar companies. '
     f'Your goal is to aid the underwriter to make a good decision in terms of W&I. '
     f'After comparing all the data print thoughts and recommendations of how this company ITR performs in terms of the set. '
     )
+    # instructions = (
+    # f'You are an expert as both, underwriter and financial analyst. '
+    # f'You will analyse the data provided of financial ratios for a small company in the UK. '
+    # f'You will compare Inventory Turn Ratio againt the min, max and median of ITR for a set of similar companies. '
+    # f'Your goal is to aid the underwriter to make a good decision in terms of W&I. '
+    # f'After comparing all the data print thoughts and recommendations of how this company ITR performs in terms of the set. '
+    # )
 
     # update the description and load assistnt object
     assistant = client.beta.assistants.update(
