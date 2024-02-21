@@ -19,9 +19,9 @@ from database import *
 
 # # BELOW IS FOR STREAMLIT DEPLOYMENT
 # client = OpenAI(api_key=st.secrets.openai)
-with open( "style.css" ) as css:
+with open( "src/scripts/style.css" ) as css:
     st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)
-
+    
 
 # st. set_page_config(layout="wide")
 # title
