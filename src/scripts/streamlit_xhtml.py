@@ -28,7 +28,7 @@ def streamlit_xhtml(company_number):
 
     # GET FINANCIAL INDICATORS
     left = 25
-    right = 14
+    right = 25
     """with st.spinner("Calculating Cost of Sales Value..."):
         try:
             file_path = f"xhtml/{file_path}"

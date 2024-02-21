@@ -366,6 +366,7 @@ def analyse_metrics(companyID, metrics, n, stats):
         f'Do a comparative analysis. '
         f'Tell about how company compares to the stats in terms of metrics. '
         f'What are the implications from an underwriter perspective?'
+        f'The most important question: After analysing all metrics in context of the statistics of the set of SME... What are the chances that the company {companyID} might decrease in value?. '
         f'Be brief. '
         f'Please do not ask any questions back. '
         f'If you need to do further processing go ahead, no need to ask. '
@@ -400,76 +401,76 @@ def analyse_metrics(companyID, metrics, n, stats):
         except Exception as e:
             st.error(f"Error occurred while displaying message: {e}")
 
-# def analyse_itr(companyID, itr, n, stats):
-#     # get profile
-#     profile = get_company_profile(companyID)
-#     # ixbrl_data = get_ixbrl_data_from_dynamodb(companyID)
+def analyse_itr(companyID, itr, n, stats):
+    # get profile
+    profile = get_company_profile(companyID)
+    # ixbrl_data = get_ixbrl_data_from_dynamodb(companyID)
     
-#     # st.write(ixbrl_data)
-#     # st.write(f'ixbrl: {ixbrl_data['Item']['ixbrlData']}')
+    # st.write(ixbrl_data)
+    # st.write(f'ixbrl: {ixbrl_data['Item']['ixbrlData']}')
 
-#     # Update agent
-#     instructions = (
-#     f'You are an expert as both, underwriter and financial analyst. '
-#     f'You will analyse the data provided of financial ratios for a small company in the UK. '
-#     f'You will compare Inventory Turn Ratio againt the min, max and median of ITR for a set of similar companies. '
-#     f'Your goal is to aid the underwriter to make a good decision in terms of W&I. '
-#     f'After comparing all the data print thoughts and recommendations of how this company ITR performs in terms of the set. '
-#     )
+    # Update agent
+    instructions = (
+    f'You are an expert as both, underwriter and financial analyst. '
+    f'You will analyse the data provided of financial ratios for a small company in the UK. '
+    f'You will compare Inventory Turn Ratio againt the min, max and median of ITR for a set of similar companies. '
+    f'Your goal is to aid the underwriter to make a good decision in terms of W&I. '
+    f'After comparing all the data print thoughts and recommendations of how this company ITR performs in terms of the set. '
+    )
 
-#     # update the description and load assistnt object
-#     assistant = client.beta.assistants.update(
-#         assistant_id='asst_bshJqwnnjeNfhH4JbSo2BkAi',
-#         instructions=instructions
-#     )
-#     #create a thread
-#     thread = client.beta.threads.create()
+    # update the description and load assistnt object
+    assistant = client.beta.assistants.update(
+        assistant_id='asst_bshJqwnnjeNfhH4JbSo2BkAi',
+        instructions=instructions
+    )
+    #create a thread
+    thread = client.beta.threads.create()
 
-#     # create a message
-#     message_content = (
-#         f'I will give you financial data for a company. '
-#         f'Information about the company can be found in the file {profile}. Use this for overall context. '
-#         # f'Ixbrl data of the company is provided in the file  {ixbrl_data}. Make sure to read all this data to find relevant information. '
-#         f'Comparison Research Set (Comps) = {n} SME. '
-#         f'The Inventory Turns Ratio for the company is {itr}. '
-#         f'The statistinc for the {n} SME set for the ITR are: '
-#         f'stats: {stats}.'
-#         f'Do a comparative analysis. '
-#         f'Tell about how company compares to the stats in terms of ITR. '
-#         f'What are the implications from an underwriter perspective?'
-#         f'Be brief. '
-#         f'Please do not ask any questions back. '
-#         f'If you need to do further processing go ahead, no need to ask. '
-#         f'Please give me a final answer. '
-#     )
+    # create a message
+    message_content = (
+        f'I will give you financial data for a company. '
+        f'Information about the company can be found in the file {profile}. Use this for overall context. '
+        # f'Ixbrl data of the company is provided in the file  {ixbrl_data}. Make sure to read all this data to find relevant information. '
+        f'Comparison Research Set (Comps) = {n} SME. '
+        f'The Inventory Turns Ratio for the company is {itr}. '
+        f'The statistinc for the {n} SME set for the ITR are: '
+        f'stats: {stats}.'
+        f'Do a comparative analysis. '
+        f'Tell about how company compares to the stats in terms of ITR. '
+        f'What are the implications from an underwriter perspective?'
+        f'Be brief. '
+        f'Please do not ask any questions back. '
+        f'If you need to do further processing go ahead, no need to ask. '
+        f'Please give me a final answer. '
+    )
 
-#     message = client.beta.threads.messages.create(
-#         thread_id= thread.id,
-#         role= 'user',
-#         content= message_content,
-#         file_ids=['file-cQFQQ0Cr1YWZb613vhShyEuO'], 
-#     )
-#     run = client.beta.threads.runs.create(
-#         assistant_id= assistant.id,
-#         thread_id= thread.id,
-#     )
+    message = client.beta.threads.messages.create(
+        thread_id= thread.id,
+        role= 'user',
+        content= message_content,
+        file_ids=['file-cQFQQ0Cr1YWZb613vhShyEuO'], 
+    )
+    run = client.beta.threads.runs.create(
+        assistant_id= assistant.id,
+        thread_id= thread.id,
+    )
 
-#     with st.spinner('Analysis by ArgoX.ai...'):
-#         wait_on_run(client=client, run=run, thread=thread)
+    with st.spinner('Analysis by ArgoX.ai...'):
+        wait_on_run(client=client, run=run, thread=thread)
 
-#     messages = client.beta.threads.messages.list(
-#         thread_id= thread.id,
-#         # order='asc'
-#     )
+    messages = client.beta.threads.messages.list(
+        thread_id= thread.id,
+        # order='asc'
+    )
 
     
-#     with st.sidebar:
+    with st.sidebar:
 
-#         # st.write(stats)
-#         try:
-#             st.write(messages.data[0].content[0].text.value)
-#         except Exception as e:
-#             st.error(f"Error occurred while displaying message: {e}")
+        # st.write(stats)
+        try:
+            st.write(messages.data[0].content[0].text.value)
+        except Exception as e:
+            st.error(f"Error occurred while displaying message: {e}")
 
 def analyse_data(companyID, n, dataframe):
     # get profile
