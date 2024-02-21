@@ -316,11 +316,11 @@ def streamlit_xhtml(company_number):
         placeholder.text(f"SIC code is {sic}, comparative GICS is: {gics}")
 
     with st.sidebar:
-        st.title('Sentiment')
-        text = sentiment_analysis()
-        st.write(text)
+        # st.title('Sentiment')
+        # text = sentiment_analysis()
+        # st.write(text)
 
-        st.divider()
+        # st.divider()
 
         st.title('Comparative Analysis')
         
