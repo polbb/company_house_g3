@@ -324,11 +324,11 @@ def streamlit_xhtml(company_number):
 
         st.title('Comparative Analysis')
         
-        st.write(dataframe.loc['01530324'])
+        # st.write(dataframe.loc['01530324'])
 
         analyse_metrics(
             companyID=company_number,
-            metrics=dataframe,
+            metrics=dataframe.loc[company_number],
             n=n,
             stats=statistics
             # stats=statistics['itr_ratio']

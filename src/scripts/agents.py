@@ -322,7 +322,7 @@ def get_stocks_xhtml_single_run(client, file_path):
 
     return stocks, stocks_str
 
-def analyse_itr(companyID, itr, n, stats):
+def analyse_metrics(companyID, metrics, n, stats):
     # get profile
     profile = get_company_profile(companyID)
     # ixbrl_data = get_ixbrl_data_from_dynamodb(companyID)
@@ -353,11 +353,11 @@ def analyse_itr(companyID, itr, n, stats):
         f'Information about the company can be found in the file {profile}. Use this for overall context. '
         # f'Ixbrl data of the company is provided in the file  {ixbrl_data}. Make sure to read all this data to find relevant information. '
         f'Comparison Research Set (Comps) = {n} SME. '
-        f'The Inventory Turns Ratio for the company is {itr}. '
+        f'All the financial metrics for the company are: {metrics}. '
         f'The statistinc for the {n} SME set for the ITR are: '
         f'stats: {stats}. This is  python dictionary containin min, max, and median for a series of metrics, including itr.'
         f'Do a comparative analysis. '
-        f'Tell about how company compares to the stats in terms of ITR. '
+        f'Tell about how company compares to the stats in terms of metrics. '
         f'What are the implications from an underwriter perspective?'
         f'Be brief. '
         f'Please do not ask any questions back. '
