@@ -5,7 +5,7 @@ from document_retrieval import get_company_name
 from helper_functions import make_dataframe
 import matplotlib.pyplot as plt
 import plotly.express as px
-from sentiment import sentiment_analysis
+from sentiment import sentiment_analysis, generate
 from benford import *
 
 
@@ -320,7 +320,9 @@ def streamlit_xhtml(company_number):
         # text = sentiment_analysis()
         # st.write(text)
 
-        # st.divider()
+        generate()
+
+        st.divider()
 
         st.title('Comparative Analysis')
         
