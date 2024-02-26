@@ -5,7 +5,7 @@ from document_retrieval import get_company_name
 from helper_functions import make_dataframe
 import matplotlib.pyplot as plt
 import plotly.express as px
-# from sentiment import sentiment_analysis, generate
+from sentiment import sentiment_analysis
 from benford import *
 
 
