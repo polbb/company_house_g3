@@ -4,6 +4,10 @@ from openai import OpenAI
 import streamlit as st
 import os
 
+import vertexai
+from vertexai.preview.generative_models import GenerativeModel, Part
+import vertexai.preview.generative_models as generative_models
+
 
 # # initialize client
 # load_dotenv('./.env.txt')
@@ -81,9 +85,6 @@ def sentiment_analysis():
 
 
 
-import vertexai
-from vertexai.preview.generative_models import GenerativeModel, Part
-import vertexai.preview.generative_models as generative_models
 
 
 def generate():
