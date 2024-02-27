@@ -152,6 +152,9 @@ def streamlit_xhtml(company_number):
             n = len(result)
 
             dataframe = make_dataframe(result)
+            
+            dataframe.drop(columns=['gics', 'gics_timestamp', 'non_micro'], inplace=True)
+
             st.dataframe(dataframe)
             dataframe = calculate_financial_ratios(dataframe) #add ratios columns
             st.dataframe(dataframe)
