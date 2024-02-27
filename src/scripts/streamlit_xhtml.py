@@ -152,12 +152,11 @@ def streamlit_xhtml(company_number):
             n = len(result)
 
             dataframe = make_dataframe(result)
-            
-            dataframe.drop(columns=['gics', 'gics_timestamp', 'non_micro'], inplace=True)
 
-            st.dataframe(dataframe)
+            dataframe.drop(columns=['gics', 'gics_timestamp', 'non_micro'], inplace=True) # REMOVE THIS CODE AFTER CTEATING GIOCS TABLE!!!
+
             dataframe = calculate_financial_ratios(dataframe) #add ratios columns
-            st.dataframe(dataframe)
+
             statistics = calculate_statistics(dataframe) # Returns a dictionary
 
             st.markdown(f"<span style='color: green; font-size: 30px;'>Comparison Research Set (Comps) = {n} SME Companies</span>", unsafe_allow_html=True)
